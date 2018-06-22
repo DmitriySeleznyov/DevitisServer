@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ServerMQTT_Lora.DBWorking;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,6 +11,8 @@ namespace ServerMQTT_Lora
     {
         static void Main(string[] args)
         {
+            
+            Console.ReadLine();
         }
     }
 }
