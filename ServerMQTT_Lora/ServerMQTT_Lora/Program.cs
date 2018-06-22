@@ -10,6 +10,7 @@ namespace ServerMQTT_Lora
     {
         static void Main(string[] args)
         {
+
         }
     }
 }
