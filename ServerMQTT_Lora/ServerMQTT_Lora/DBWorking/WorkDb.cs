@@ -17,16 +17,21 @@ namespace ServerMQTT_Lora
         private string password = "cf4d55a7nm";
         private string database = "xgbua_x_exz";
 
+
         
-        public void AddInfo()
+
+        public void AddInfo(string subject_id, string sum_pot , string pol_pot , string curr , string volt , string temper , string state)
         {
             Connection connection = new Connection(connectionstring);
             connection.Connect();
-
+            string query = "insert into \"Monitoring_BKMU\" (subject_id, sum_pot,pol_pot,curr,volt,temper,state,reg_time) " +
+                "values('"+subject_id+"', '"+sum_pot+"' , '"+pol_pot+"' , '"+curr+"' , '"+volt+"' , '"+temper+"' , '+"+state+"' , '"+ DateTime.Now.ToString() + "')";
+            NpgsqlCommand cmd = new NpgsqlCommand(query, connection.connection);
+            cmd.ExecuteNonQuery();
             connection.Disconect();
         }
 
-        public string GetsubjId(string sub_code)
+        public int GetsubjId(string sub_code)
         {
             Connection connection = new Connection(this.connectionstring);
             connection.Connect();
@@ -34,7 +39,7 @@ namespace ServerMQTT_Lora
             NpgsqlDataReader dataReader = command.ExecuteReader();
             dataReader.Read();
             connection.Disconect();
-            return dataReader[0].ToString();
+            return int.Parse(dataReader[0].ToString());
         }
 
         

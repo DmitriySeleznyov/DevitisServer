@@ -12,7 +12,7 @@ namespace ServerMQTT_Lora
         static void Main(string[] args)
         {
             WorkDb db = new WorkDb();
-            db.GetsubjId("01a3f037");
+            db.AddInfo("19", "0", "0", "0", "0", "0", "0");
             Console.ReadLine();
         }
     }
