@@ -6,7 +6,7 @@ namespace ServerMQTT_Lora.DBWorking
     public class Connection
     {
         private string string_connection;
-        private NpgsqlConnection connection;
+        public NpgsqlConnection connection;
 
         /// <summary>
         /// конструктор с параметром строка подключения
