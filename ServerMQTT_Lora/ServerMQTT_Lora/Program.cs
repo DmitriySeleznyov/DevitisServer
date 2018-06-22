@@ -15,7 +15,7 @@ namespace ServerMQTT_Lora
             ConnectMqtt stconnect = new ConnectMqtt();
             ListenerMQTT socket = new ListenerMQTT();
 
-            MqttClient client;
+            //MqttClient client;
 
             //client = new MqttClient("broker.hivemq.com");
             //byte code = client.Connect(Guid.NewGuid().ToString());
