@@ -11,9 +11,10 @@ namespace ServerMQTT_Lora
     {
         static void Main(string[] args)
         {
-            WorkDb db = new WorkDb();
             
             Console.ReadLine();
         }
+
+        
     }
 }
