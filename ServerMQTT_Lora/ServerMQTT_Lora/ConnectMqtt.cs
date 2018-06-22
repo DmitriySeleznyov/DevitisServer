@@ -15,24 +15,25 @@ namespace ServerMQTT_Lora
     public class ConnectMqtt
     {
         MqttClient client;
-            
-        public void MainConnect()
+       
+
+        public void MainConnect(string topic)
         {
 
-            client = new MqttClient("broker.hivemq.com");
+           // client = new MqttClient("broker.hivemq.com");
                 /*new MqttClient("broker.hivemq.com",
                                     MqttSettings.MQTT_BROKER_DEFAULT_SSL_PORT,
                                      true,
                                      new X509Certificate(ResourceSet.m2mqtt_ca));*/
-            /*byte code = client.Connect(Guid.NewGuid().ToString(), null, null,
+            byte code = client.Connect(Guid.NewGuid().ToString(), null, null,
                            false, // will retain flag
                            MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE, // will QoS
                            true, // will flag
-                           "/my_topic", // will topic
-                           "my_topic",
+                           topic, // will topic
+                           client.WillMessage,
                            true,
-                           60);*/
-            byte code = client.Connect(Guid.NewGuid().ToString());
+                           60);
+           // byte code = client.Connect(Guid.NewGuid().ToString());
            
             client.ProtocolVersion = MqttProtocolVersion.Version_3_1;
             //Console.WriteLine("MQTT " + MqttProtocolVersion.Version_3_1 + " Connect");
@@ -60,14 +61,41 @@ namespace ServerMQTT_Lora
 
         public void SubscribeMessage()
         {
+
+            client = new MqttClient("broker.hivemq.com");
+            byte code = client.Connect(Guid.NewGuid().ToString());
+            client.ProtocolVersion = MqttProtocolVersion.Version_3_1;
+
             client.MqttMsgSubscribed += client_MqttMsgSubscribed;
-            /*"/topic_1", "/topic_2", "/#",*/
-            ushort msgId = client.Subscribe(new string[] { "/topic_1", "/topic_2", "/exz/lora", "BLEKFIEFF" },
-                new byte[] { MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE,
-                    MqttMsgBase.QOS_LEVEL_AT_LEAST_ONCE,
-                MqttMsgBase.QOS_LEVEL_AT_LEAST_ONCE,
-                MqttMsgBase.QOS_LEVEL_AT_LEAST_ONCE});
-            string message =  client.ToString();
+            
+            string[] arraytopic = new string[] { "exz/lora", "BLEKFIEFF" };
+            byte[] messagetopic = new byte[] { MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE,
+                    MqttMsgBase.QOS_LEVEL_AT_LEAST_ONCE};
+
+            ushort msgId = client.Subscribe(arraytopic,messagetopic);
+
+            for (int i = 0; i < arraytopic.Length; i++)
+            {
+                Console.WriteLine("Topic name {"+i+"}:" + arraytopic[i]);
+
+            }
+
+            Console.WriteLine("                        ");
+            //Console.WriteLine("Chose topic: ");
+            int chooseTopic = 1; //int.Parse(Console.ReadLine());
+            //DisconnectMqtt();
+            if (chooseTopic == 0)
+            {
+               MainConnect("exz/lora");
+            }
+            else
+            {
+                MainConnect("BLEKFIEFF");
+            }
+
+            Console.WriteLine("Will Message topic {" + i + "}:" + client.WillMessage);
+            
+            //string temp = client.WillMessage;
         }
         public void DisconnectMqtt()
         {
@@ -84,8 +112,6 @@ namespace ServerMQTT_Lora
 
         void client_MqttMsgSubscribed(object sender, MqttMsgSubscribedEventArgs e)
         {
-            Debug.WriteLine("Subscribed for id = " + e.MessageId);
-            //Console.WriteLine("Subscribed for id = " + e.MessageId + " message: " + e.ToString());
             Console.WriteLine("Subscribed for id = " + e.MessageId );
         }
 
