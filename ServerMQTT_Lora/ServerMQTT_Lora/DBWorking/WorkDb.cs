@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace ServerMQTT_Lora
 {
-    class Program
+    public class WorkDb
     {
-        static void Main(string[] args)
-        {
-        }
+
     }
 }

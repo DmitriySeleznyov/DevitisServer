@@ -4,12 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ServerMQTT_Lora
+namespace ServerMQTT_Lora.DBWorking
 {
-    class Program
+    class Connection
     {
-        static void Main(string[] args)
-        {
-        }
     }
 }
