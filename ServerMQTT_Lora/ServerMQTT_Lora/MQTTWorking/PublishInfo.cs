@@ -11,31 +11,36 @@ using System.Threading;
 
 namespace ServerMQTT_Lora
 {
-    public class PublishInfo: ConnectMqtt
+    public class PublishInfo
     {
         MqttClient client;
-
+        /// <summary>
+        /// Function for send data on Mqqt broker for choosen topic.
+        /// </summary>
         public void PublishMessage()
         {
             client = new MqttClient("broker.hivemq.com");
-            //client = new MqttClient("localhost");
+
             byte code = client.Connect(Guid.NewGuid().ToString());
             client.ProtocolVersion = MqttProtocolVersion.Version_3_1;
 
             client.MqttMsgPublished += client_MqttMsgPublished;
 
-            string mes = Console.ReadLine();
-            string topic = "exz/lora";//BLEKFIEFF  exz/lora
-            ushort send = client.Publish(topic, Encoding.UTF8.GetBytes(mes), 
+            Console.WriteLine("Write message(data) for sending: ");
+            string mes = Console.ReadLine();// writting message for send
+            Console.WriteLine("Write topic for sending on Mqtt broker: ");
+            string topic = Console.ReadLine();// writting topic for send
+
+            string defaultTopic = "exz/lora";//BLEKFIEFF  exz/lora
+            ushort send = client.Publish(defaultTopic, Encoding.UTF8.GetBytes(mes), 
                                             MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE, 
                                             true);
         }
-        private void MqttSubscribeTopic(string topic, byte qoslevel)
-        {
-            string[] topics = { topic };
-            byte[] qoss = { qoslevel };
-            client.Subscribe(topics, qoss);
-        }
+        /// <summary>
+        /// Acept that message was publish.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void client_MqttMsgPublished(object sender, MqttMsgPublishedEventArgs e)
         {
             Console.WriteLine("MessageId = " + e.MessageId + " Published = " + e.IsPublished);

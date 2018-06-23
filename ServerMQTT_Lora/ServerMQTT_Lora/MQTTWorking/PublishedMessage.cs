@@ -37,6 +37,15 @@ namespace ServerMQTT_Lora
         
         private void EventPublished(Object sender, MqttMsgPublishEventArgs e)
         {
+        
+        delegate void SetTextCallback(string text);
+        /// <summary>
+        /// Method getting message from Mqtt broker.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void EventPublished(Object sender, MqttMsgPublishEventArgs e)
+        {
             try
             {
                 SetText("*** Received Message");
@@ -50,6 +59,10 @@ namespace ServerMQTT_Lora
             }
 
         }
+        /// <summary>
+        /// Show message from Mqtt broke.
+        /// </summary>
+        /// <param name="text"></param>
         private void SetText(string text)
         {
             Console.WriteLine(text);
