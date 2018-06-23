@@ -104,9 +104,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DBWorking\AddToDb.cs" />
+    <Compile Include="DBWorking\Connection.cs" />
+    <Compile Include="ParseNumbers.cs" />
     <Compile Include="ConnectMqtt.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="DBWorking\WorkDb.cs" />
     <Compile Include="PublishedMessage.cs" />
     <Compile Include="PublishInfo.cs" />
   </ItemGroup>
