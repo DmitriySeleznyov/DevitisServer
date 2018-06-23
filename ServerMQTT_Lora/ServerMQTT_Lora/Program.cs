@@ -20,9 +20,10 @@ namespace ServerMQTT_Lora
 
             //con.Connect();
             //pub.PublishMessage();
-            pubM.PublishMess();
+            /*pubM.PublishMess();*/
             //client.ProtocolVersion = MqttProtocolVersion.Version_3_1;
-
+            ParseGo ps = new ParseGo();
+            ps.Parsego();
             Console.ReadKey();
         }
     }

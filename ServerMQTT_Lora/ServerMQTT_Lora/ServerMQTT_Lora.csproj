@@ -118,6 +118,7 @@
   <ItemGroup>
     <Compile Include="DBWorking\AddToDb.cs" />
     <Compile Include="DBWorking\Connection.cs" />
+    <Compile Include="ParseGo.cs" />
     <Compile Include="ParseNumbers.cs" />
     <Compile Include="MQTTWorking\ConnectMqtt.cs" />
     <Compile Include="Program.cs" />

@@ -34,7 +34,7 @@ namespace ServerMQTT_Lora
                 Console.WriteLine("Cannot connect to Mqtt. Reload.");
             }
         }
-
+        
         private void EventPublished(Object sender, MqttMsgPublishEventArgs e)
         {
             try

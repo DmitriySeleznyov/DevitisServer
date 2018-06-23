@@ -37,5 +37,12 @@ namespace ServerMQTT_Lora
             num /= Math.Pow(10, int.Parse(intputnumber.Substring(1, 1).ToString()));
             return num;
         }
+
+        public bool IsUs(string input)
+        {
+            if (input.Substring(0, 4) == "424D")
+                return true;
+            else return false;
+        }
     }
 }
