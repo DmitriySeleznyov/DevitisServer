@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System;
+using System.Text;
 using Npgsql;
 
 namespace ServerMQTT_Lora.DBWorking
@@ -17,6 +18,7 @@ namespace ServerMQTT_Lora.DBWorking
         public Connection(string stringtoconnection)
         {
             this.string_connection = stringtoconnection;
+            Console.WriteLine("DB add line to DB succesfully!");
         }
 
         /// <summary>
@@ -34,7 +36,8 @@ namespace ServerMQTT_Lora.DBWorking
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.Append("Server = " + server + "; Port = " + port + "; User Id = " + user + "; Password = " + password + "; Database =  " + database);
             this.string_connection = stringBuilder.ToString();
-            
+            Console.WriteLine("DB add line succesfully!");
+
         }
         
         /// <summary>

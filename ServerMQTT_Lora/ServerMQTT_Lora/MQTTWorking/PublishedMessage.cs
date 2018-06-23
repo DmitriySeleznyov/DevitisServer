@@ -13,7 +13,7 @@ namespace ServerMQTT_Lora
     
     public class PublishedMessage
     {
-        MqttClient client;
+        ParseGo ps = new ParseGo();
         /// <summary>
         /// Method getting message from Mqtt broker.
         /// </summary>
@@ -23,9 +23,11 @@ namespace ServerMQTT_Lora
         {
             try
             {
+                string query = Encoding.UTF8.GetString(e.Message);
+                ps.Parsego(query);
                 SetText("*** Received Message");
                 SetText("*** Topic: " + e.Topic);
-                SetText("*** Message: " + Encoding.UTF8.GetString(e.Message));
+                SetText("*** Message: " + query);
                 SetText("");
             }
             catch (Exception ex)

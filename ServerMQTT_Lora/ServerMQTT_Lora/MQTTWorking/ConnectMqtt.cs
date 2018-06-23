@@ -28,8 +28,8 @@ namespace ServerMQTT_Lora
 
             if (client.IsConnected)
             {
-                Console.WriteLine("Connected to Mqtt: "); //BLEKFIEFF exz/lora
-                Console.WriteLine("");
+                Console.WriteLine("Connected to Mqtt: \n"); //BLEKFIEFF exz/lora
+                Console.WriteLine("Connected to DB:  \n");
                 ushort msgId = client.Subscribe(new string[] { "exz/lora" }, new byte[] { MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE });
                 client.MqttMsgPublishReceived += new MqttClient.MqttMsgPublishEventHandler(pubMessage.EventPublished);
             }

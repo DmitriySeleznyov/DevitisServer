@@ -8,14 +8,31 @@ namespace ServerMQTT_Lora
 {
     class ParseGo
     {
-        public void Parsego()
+        /// <param name="sub_code"></param>
+        /// <param name="sum_pot"></param>
+        /// <param name="pol_pot"></param>
+        /// <param name="curr"></param>
+        /// <param name="volt"></param>
+        /// <param name="temper"></param>
+        /// <param name="state"></param>
+        public void Parsego(string query)
         {
-            string query = "{\n    \"cmd\": \"rx\",\n    \"EUI\": \"01a3f037\",\n    \"ts\": 81159620,\n    \"fcnt\": \"0\",\n    \"port\": \"2\",\n    \"ack\": \"false\",\n    \"data\": \"424d000030017613050670300000020034400009990000000000000000000000000000\"\n}";
-
             List<string> list = new List<string>();
             list = ParseByNewLines(query).ToList();
-            string strtemp = GetData(list[2]);
+            string subjectCode = GetData(list[2]);
             string temp = GetData(list[7]);
+            ParseNumbers parseNumbers = new ParseNumbers();
+            List<string> checking = parseNumbers.ParseToRegisters(temp).ToList();
+
+            List<double> res = new List<double>();
+
+            bool oursubj = parseNumbers.IsUs(checking[0]);
+            for (int i = 1; i <= 9; i++)
+            {
+                res.Add(parseNumbers.GetNumber(checking[i]));
+            }
+            WorkDb db = new WorkDb();
+            db.Run(subjectCode,res[0].ToString(), res[1].ToString(), res[2].ToString(), res[3].ToString(), res[4].ToString(), res[5].ToString());
         }
 
 

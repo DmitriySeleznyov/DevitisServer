@@ -53,10 +53,18 @@ namespace ServerMQTT_Lora.DBWorking
         /// <param name="connection">connection</param>
         private void AddInfo(string subject_id, string sum_pot, string pol_pot, string curr, string volt, string temper, string state, Connection connection)
         {
+            connection.Disconect();
+            connection.Connect();
             string query = "insert into \"Monitoring_BKMU\" (subject_id, sum_pot,pol_pot,curr,volt,temper,state,reg_time) " +
-                "values('" + subject_id + "', '" + sum_pot + "' , '" + pol_pot + "' , '" + curr + "' , '" + volt + "' , '" + temper + "' , '+" + state + "' , '" + DateTime.Now.ToString() + "')";
+                "values('" + stringrefactor(subject_id) + "', '" + stringrefactor(sum_pot) + "' , '" + stringrefactor(pol_pot) + "' , '" + stringrefactor(curr) + "' , '" + stringrefactor(volt) + "' , '" + stringrefactor(temper) + "' , '+" + stringrefactor(state) + "' , '" + DateTime.Now.ToString() + "')";
             NpgsqlCommand cmd = new NpgsqlCommand(query, connection.connection);
             cmd.ExecuteNonQuery();
+            connection.Disconect();
+        }
+
+        private string stringrefactor(string str)
+        {
+            return str.Replace(',', '.');
         }
 
         /// <summary>
@@ -67,10 +75,14 @@ namespace ServerMQTT_Lora.DBWorking
         /// <returns></returns>
         private int GetsubjId(string sub_code , Connection connection)
         {
+            connection.Disconect();
+            connection.Connect();
             NpgsqlCommand command = new NpgsqlCommand("SELECT \"subject_id\" FROM \"Subject\" WHERE \"subject_code\" = '" + sub_code + "'", connection.connection);
             NpgsqlDataReader dataReader = command.ExecuteReader();
             dataReader.Read();
+            
             return int.Parse(dataReader[0].ToString());
+            
         }
     }
 }

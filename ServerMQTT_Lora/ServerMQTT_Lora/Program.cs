@@ -17,7 +17,9 @@ namespace ServerMQTT_Lora
             PublishInfo pubInfo = new PublishInfo();
 
             connect.MqttConnect();
-            //pubInfo.PublishMessage();
+            //pubInfo.PublishMessage(); class for sending message on Mqtt broker server for choosen topic
+
+            
             Console.ReadKey();
         }
     }
