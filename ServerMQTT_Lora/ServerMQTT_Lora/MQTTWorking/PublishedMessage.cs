@@ -13,29 +13,14 @@ namespace ServerMQTT_Lora
     
     public class PublishedMessage
     {
-        MqttClient client;
+        
         delegate void SetTextCallback(string text);
-
-
-        public void PublishMess()
-        {
-                client = new MqttClient("broker.hivemq.com");
-                byte code = client.Connect(Guid.NewGuid().ToString());
-                client.ProtocolVersion = MqttProtocolVersion.Version_3_1;
-
-            if (client.IsConnected)
-            {   
-                Console.WriteLine("Connected to Mqtt: ");
-                ushort msgId = client.Subscribe(new string[] { "exz/lora" }, new byte[] { MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE });
-                client.MqttMsgPublishReceived += new MqttClient.MqttMsgPublishEventHandler(EventPublished);
-            }
-            else
-            {
-                Console.WriteLine("Cannot connect to Mqtt. Reload.");
-            }
-        }
-
-        private void EventPublished(Object sender, MqttMsgPublishEventArgs e)
+        /// <summary>
+        /// Method getting message from Mqtt broker.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void EventPublished(Object sender, MqttMsgPublishEventArgs e)
         {
             try
             {
@@ -50,6 +35,10 @@ namespace ServerMQTT_Lora
             }
 
         }
+        /// <summary>
+        /// Show message from Mqtt broke.
+        /// </summary>
+        /// <param name="text"></param>
         private void SetText(string text)
         {
             Console.WriteLine(text);

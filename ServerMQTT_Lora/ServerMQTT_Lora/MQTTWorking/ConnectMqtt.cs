@@ -15,27 +15,33 @@ namespace ServerMQTT_Lora
     public class ConnectMqtt
     {
         MqttClient client;
-
-        public void Connect()
+        PublishedMessage pubMessage = new PublishedMessage();
+        /// <summary>
+        /// Conncet to server Mqtt for this param.
+        /// (host = broker.hivemq.com, port = 1883, topic = exz/lora, qosLevel = 2).
+        /// </summary>
+        public void MqttConnect()
         {
-               client = new MqttClient("broker.hivemq.com");
-                /*new MqttClient("broker.hivemq.com",
-                            MqttSettings.MQTT_BROKER_DEFAULT_SSL_PORT,
-                             true,
-                             new X509Certificate(ResourceSet.m2mqtt_ca));*/
-                /*byte code = client.Connect(Guid.NewGuid().ToString(), null, null,
-                           false, // will retain flag
-                           MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE, // will QoS
-                           true, // will flag
-                           topic, // will topic
-                           client.WillMessage,
-                           true,
-                           60);*/
+            client = new MqttClient("broker.hivemq.com");
             byte code = client.Connect(Guid.NewGuid().ToString());
             client.ProtocolVersion = MqttProtocolVersion.Version_3_1;
-            ushort msgId = client.Subscribe(new string[] { "BLEKFIEFF" },new byte[] { MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE});
 
+            if (client.IsConnected)
+            {
+                Console.WriteLine("Connected to Mqtt: "); //BLEKFIEFF exz/lora
+                Console.WriteLine("");
+                ushort msgId = client.Subscribe(new string[] { "exz/lora" }, new byte[] { MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE });
+                client.MqttMsgPublishReceived += new MqttClient.MqttMsgPublishEventHandler(pubMessage.EventPublished);
+            }
+            else
+            {
+                Console.WriteLine("Cannot connect to Mqtt. Reload.");
+                client.Disconnect();
+            }
         }
+        /// <summary>
+        /// Disconnect from server Mqtt.
+        /// </summary>
         public void DisconnectMqtt()
         {
             client.Disconnect();

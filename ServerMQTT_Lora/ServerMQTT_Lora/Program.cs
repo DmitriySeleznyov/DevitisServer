@@ -13,16 +13,11 @@ namespace ServerMQTT_Lora
     {
         static void Main(string[] args)
         {
+            ConnectMqtt connect = new ConnectMqtt();
+            PublishInfo pubInfo = new PublishInfo();
 
-            ConnectMqtt con = new ConnectMqtt();
-            PublishInfo pub = new PublishInfo();
-            PublishedMessage pubM = new PublishedMessage();
-
-            //con.Connect();
-            //pub.PublishMessage();
-            pubM.PublishMess();
-            //client.ProtocolVersion = MqttProtocolVersion.Version_3_1;
-
+            connect.MqttConnect();
+            //pubInfo.PublishMessage();
             Console.ReadKey();
         }
     }
