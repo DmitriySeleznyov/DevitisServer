@@ -119,12 +119,12 @@
     <Compile Include="DBWorking\AddToDb.cs" />
     <Compile Include="DBWorking\Connection.cs" />
     <Compile Include="ParseNumbers.cs" />
-    <Compile Include="ConnectMqtt.cs" />
+    <Compile Include="MQTTWorking\ConnectMqtt.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DBWorking\WorkDb.cs" />
-    <Compile Include="PublishedMessage.cs" />
-    <Compile Include="PublishInfo.cs" />
+    <Compile Include="MQTTWorking\PublishedMessage.cs" />
+    <Compile Include="MQTTWorking\PublishInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
