@@ -21,7 +21,7 @@ namespace ServerMQTT_Lora.DBWorking
         {
             try
             {
-                Connection connection = new Connection(settings);
+                Connection connection = new Connection();
                 connection.Connect();
                 AddInfo(GetsubjId(sub_code, connection).ToString(), sum_pot, pol_pot, curr, volt, temper, state, connection);
                 connection.Disconect();

@@ -19,8 +19,7 @@ namespace ServerMQTT_Lora
         {
             try
             {
-                ConfigDBReader dbconf = new ConfigDBReader();
-                Connection connection = new Connection(dbconf.DBReader());
+                Connection connection = new Connection();
                 connection.Connect();
                 AddToDb db = new AddToDb();
                 db.AddWithoutOpenConnection(sub_code, sum_pot, pol_pot, curr, volt, temper, state, connection);

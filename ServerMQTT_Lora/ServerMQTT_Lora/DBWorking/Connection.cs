@@ -20,10 +20,11 @@ namespace ServerMQTT_Lora.DBWorking
         /// <param name="user">пользователь</param>
         /// <param name="password">пароль</param>
         /// <param name="database">база</param>
-        public Connection(DBSettingsModel settings)
+        public Connection()
         {
             try
             {
+                DBSettingsModel settings = new DBSettingsModel();
                 StringBuilder stringBuilder = new StringBuilder();
                 stringBuilder.Append("Server = " + settings.server + "; Port = " + settings.port + "; User Id = " + settings.user + "; Password = " + settings.password + "; Database =  " + settings.database);
                 this.string_connection = stringBuilder.ToString();
