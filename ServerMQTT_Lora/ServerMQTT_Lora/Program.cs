@@ -6,15 +6,14 @@ namespace ServerMQTT_Lora
 {
     public class Program
     {
+        #region
         internal delegate void SignalHandler(ConsoleSignal consoleSignal);
 
         internal enum ConsoleSignal
         {
             CtrlC = 0,
             CtrlBreak = 1,
-            Close = 2,
-            LogOff = 5,
-            Shutdown = 6
+            Close = 2
         }
 
         internal static class ConsoleHelper
@@ -24,6 +23,7 @@ namespace ServerMQTT_Lora
         }
 
         private static SignalHandler signalHandler;
+        #endregion
 
         static void Main(string[] args)
         {
@@ -41,8 +41,7 @@ namespace ServerMQTT_Lora
         private static void HandleConsoleSignal(ConsoleSignal consoleSignal)
         {
             ConnectMqtt connect = new ConnectMqtt();
-
-            connect.DisconnectMqtt(connect.client);
+            connect.DisconnectMqtt();
         }
     }
 }

@@ -9,7 +9,7 @@ namespace ServerMQTT_Lora
     public class ConnectMqtt
     {
 
-        public MqttClient client;
+        MqttClient client;
         PublishedMessage pubMessage = new PublishedMessage();
 
         /// <summary>
@@ -45,18 +45,16 @@ namespace ServerMQTT_Lora
         /// <summary>
         /// Disconnect from server Mqtt.
         /// </summary>
-        public void DisconnectMqtt(MqttClient mqttClient)
+        public void DisconnectMqtt()
         {
             try
             {
-                client = mqttClient;
                 client.Disconnect();
                 Console.WriteLine("MQTT Disconnect");
             }
             catch (Exception ex)
             {
                 Console.WriteLine("Error :" + ex.Message);
-            }
             }
         }
     }

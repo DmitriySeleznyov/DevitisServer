@@ -24,7 +24,9 @@ namespace ServerMQTT_Lora.DBWorking
         {
             try
             {
-                DBSettingsModel settings = new DBSettingsModel();
+                ConfigDBReader cread = new ConfigDBReader();
+                DBSettingsModel settings =                 cread.DBReader();
+
                 StringBuilder stringBuilder = new StringBuilder();
                 stringBuilder.Append("Server = " + settings.server + "; Port = " + settings.port + "; User Id = " + settings.user + "; Password = " + settings.password + "; Database =  " + settings.database);
                 this.string_connection = stringBuilder.ToString();
