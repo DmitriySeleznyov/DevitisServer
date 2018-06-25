@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?> 
+<ConnectSettings>
+  <MqttConnectSettings>
+     <hostName>broker.hivemq.com</hostName>
+     <port>1883</port>
+     <topic>exz/lora</topic>
+  </MqttConnectSettings>
+  <DataBaseConnectSettings>
+    <server>postgres9.1gb.ua</server>
+    <port>5432</port>
+    <user>xgbua_x_exz</user>
+    <password>cf4d55a7nm</password>
+    <database>xgbua_x_exz</database>
+  </DataBaseConnectSettings>
+</ConnectSettings>
+

@@ -116,9 +116,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConfigModel\DBSettingsModel.cs" />
+    <Compile Include="ConfigXMLReader.cs" />
     <Compile Include="DBWorking\AddToDb.cs" />
     <Compile Include="DBWorking\Connection.cs" />
-    <Compile Include="MQTTWorking\MqttConfig.cs" />
+    <Compile Include="ConfigModel\MqttSettingsModel.cs" />
     <Compile Include="ParseGo.cs" />
     <Compile Include="ParseNumbers.cs" />
     <Compile Include="MQTTWorking\ConnectMqtt.cs" />
@@ -133,7 +135,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="MQTTWorking\ConfigMqtt.xml" />
+    <Content Include="Config.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

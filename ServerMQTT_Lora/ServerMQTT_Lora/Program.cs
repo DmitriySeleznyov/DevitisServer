@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System; 
 
 namespace ServerMQTT_Lora
 {
@@ -8,10 +8,10 @@ namespace ServerMQTT_Lora
         {
             ConnectMqtt connect = new ConnectMqtt();
             PublishInfo pubInfo = new PublishInfo();
-            
-            connect.MqttConnect();
-            //pubInfo.PublishMessage(); class for sending message on Mqtt broker server for choosen topic
+            ConfigXMLReader runXml = new ConfigXMLReader();
 
+            connect.MqttConnect(runXml.XMLReader());
+            //pubInfo.PublishMessage(); class for sending message on Mqtt broker server for choosen topic
 
             Console.ReadKey();
         }
