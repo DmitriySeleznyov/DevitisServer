@@ -1,9 +1,4 @@
 ﻿using ServerMQTT_Lora.MQTTWorking;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml;
 
 namespace ServerMQTT_Lora
@@ -12,9 +7,7 @@ namespace ServerMQTT_Lora
     {
         public MqttSettingsModel XMLReader()
         {
-            string host = "";
-            string port = "";
-            string topic = "";
+            MqttSettingsModel mqtt = new MqttSettingsModel();
 
             XmlDocument xmldoc = new XmlDocument();
             xmldoc.Load("Config.xml");
@@ -31,16 +24,16 @@ namespace ServerMQTT_Lora
                         foreach (XmlNode childnode in fchildnode.ChildNodes)
                         {
                             if (childnode.Name == "hostName")
-                            { host = childnode.InnerText; }
+                            { mqtt.HostName = childnode.InnerText; }
                             if (childnode.Name == "port")
-                            { port = childnode.InnerText; }
+                            { mqtt.Port = childnode.InnerText; }
                             if (childnode.Name == "topic")
-                            { topic = childnode.InnerText; }
+                            { mqtt.Topic = childnode.InnerText; }
                         }
                     }
                 }
             }
-            return new MqttSettingsModel(host, port, topic);
+            return mqtt;
         }
     }
 }

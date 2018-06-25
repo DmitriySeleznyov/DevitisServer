@@ -5,13 +5,11 @@ namespace ServerMQTT_Lora
 {
     public class ParseNumbers
     {
-        //string input_data = "424d000000000000000000000000000000000000000000000000000000000000000000";
-        //List<string> list = ParseToRegisters(input_data).ToList();
-        //List<string> list = new List<string>();
-        //list.Add("1303234");
-        //double d = GetNumber(list[0]);
-
-
+        /// <summary>
+        /// Возвращяет разделенную строку на подстроки
+        /// </summary>
+        /// <param name="input_data"></param>
+        /// <returns></returns>
         public IEnumerable<string> ParseToRegisters(string input_data)
         {
             List<string> data = new List<string>();
@@ -22,7 +20,12 @@ namespace ServerMQTT_Lora
             }
             return data;
         }
-
+        
+        /// <summary>
+        /// Возвращает значение в кореектном виде из байтов
+        /// </summary>
+        /// <param name="intputnumber"></param>
+        /// <returns></returns>
         public double GetNumber(string intputnumber)
         {
             double num = 0;
@@ -38,7 +41,12 @@ namespace ServerMQTT_Lora
             num /= Math.Pow(10, int.Parse(intputnumber.Substring(1, 1).ToString()));
             return num;
         }
-
+        
+        /// <summary>
+        /// Возвращает наш ли аппарат
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
         public bool IsUs(string input)
         {
             if (input.Substring(0, 4).ToUpper() == "424D")

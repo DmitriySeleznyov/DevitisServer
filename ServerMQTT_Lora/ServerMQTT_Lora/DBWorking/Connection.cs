@@ -2,7 +2,6 @@
 using System.Text;
 using Npgsql;
 using ServerMQTT_Lora.ConfigModel;
-using ServerMQTT_Lora.MQTTWorking;
 
 namespace ServerMQTT_Lora.DBWorking
 {
@@ -23,11 +22,17 @@ namespace ServerMQTT_Lora.DBWorking
         /// <param name="database">база</param>
         public Connection(DBSettingsModel settings)
         {
-            StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.Append("Server = " + settings.server + "; Port = " + settings.port + "; User Id = " + settings.user + "; Password = " + settings.password + "; Database =  " + settings.database);
-            this.string_connection = stringBuilder.ToString();
-            Console.WriteLine("DB add line succesfully!");
-
+            try
+            {
+                StringBuilder stringBuilder = new StringBuilder();
+                stringBuilder.Append("Server = " + settings.server + "; Port = " + settings.port + "; User Id = " + settings.user + "; Password = " + settings.password + "; Database =  " + settings.database);
+                this.string_connection = stringBuilder.ToString();
+                Console.WriteLine("DB add line succesfully!");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error :" + ex.Message);
+            }
         }
         
         /// <summary>
@@ -35,8 +40,15 @@ namespace ServerMQTT_Lora.DBWorking
         /// </summary>
         public void Connect()
         {
-            this.connection = new NpgsqlConnection(this.string_connection);
-            connection.Open();
+            try
+            {
+                this.connection = new NpgsqlConnection(this.string_connection);
+                connection.Open();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error :" + ex.Message);
+            }
         }
 
         /// <summary>
@@ -44,7 +56,14 @@ namespace ServerMQTT_Lora.DBWorking
         /// </summary>
         public void Disconect()
         {
+            try
+            { 
             connection.Close();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error :" + ex.Message);
+            }
         }
 
         /// <summary>
@@ -52,16 +71,30 @@ namespace ServerMQTT_Lora.DBWorking
         /// </summary>
         public void ConnectAsync()
         {
-            this.connection = new NpgsqlConnection(this.string_connection);
-            connection.OpenAsync();
-        }
+            try
+            { 
+                this.connection = new NpgsqlConnection(this.string_connection);
+                connection.OpenAsync();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error :" + ex.Message);
+            }
+}
 
         /// <summary>
         /// Disconnection async DB connection
         /// </summary>
         public void DisconnectAsync()
         {
-            connection.Close();
+            try
+            {
+                connection.Close();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error :" + ex.Message);
+            }
         }
     }
 }

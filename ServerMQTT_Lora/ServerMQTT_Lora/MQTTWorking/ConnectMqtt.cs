@@ -8,10 +8,9 @@ namespace ServerMQTT_Lora
 {
     public class ConnectMqtt
     {
-        
+
         MqttClient client;
         PublishedMessage pubMessage = new PublishedMessage();
-       
 
         /// <summary>
         /// Conncet to server Mqtt for this param.
@@ -19,31 +18,44 @@ namespace ServerMQTT_Lora
         /// </summary>
         public void MqttConnect(MqttSettingsModel settings)
         {
-            client = new MqttClient(settings.HostName);
-            byte code = client.Connect(Guid.NewGuid().ToString());
-            client.ProtocolVersion = MqttProtocolVersion.Version_3_1;
-
-            if (client.IsConnected)
+            try
             {
-                Console.WriteLine("Connected to Mqtt: \n"); //BLEKFIEFF exz/lora
-                Console.WriteLine("Connected to DB:  \n");
-                ushort msgId = client.Subscribe(new string[] { settings.Topic }, new byte[] { MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE });
-                client.MqttMsgPublishReceived += new MqttClient.MqttMsgPublishEventHandler(pubMessage.EventPublished);
+                client = new MqttClient(settings.HostName);
+                byte code = client.Connect(Guid.NewGuid().ToString());
+                client.ProtocolVersion = MqttProtocolVersion.Version_3_1;
+                if (client.IsConnected)
+                {
+                    Console.WriteLine("Connected to Mqtt: \n"); //BLEKFIEFF exz/lora
+                    Console.WriteLine("Connected to DB:  \n");
+                    ushort msgId = client.Subscribe(new string[] { settings.Topic }, new byte[] { MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE });
+                    client.MqttMsgPublishReceived += new MqttClient.MqttMsgPublishEventHandler(pubMessage.EventPublished);
+                }
+                else
+                {
+                    Console.WriteLine("Cannot connect to Mqtt. Reload.");
+                    client.Disconnect();
+                }
             }
-            else
+            catch (Exception ex)
             {
-                Console.WriteLine("Cannot connect to Mqtt. Reload.");
-                client.Disconnect();
+                Console.WriteLine("Error :" + ex.Message);
             }
         }
+
         /// <summary>
         /// Disconnect from server Mqtt.
         /// </summary>
         public void DisconnectMqtt()
         {
-            client.Disconnect();
-            Console.WriteLine("MQTT Disconnect");
-
+            try
+            {
+                client.Disconnect();
+                Console.WriteLine("MQTT Disconnect");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error :" + ex.Message);
+            }
         }
     }
 }

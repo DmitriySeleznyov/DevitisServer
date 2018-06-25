@@ -8,6 +8,7 @@ namespace ServerMQTT_Lora
     public class PublishedMessage
     {
         ParseGo ps = new ParseGo();
+
         /// <summary>
         /// Method getting message from Mqtt broker.
         /// </summary>
@@ -26,17 +27,26 @@ namespace ServerMQTT_Lora
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.ToString());
+                Console.WriteLine("Error :" + ex.Message);
             }
 
         }
+
         /// <summary>
         /// Show message from Mqtt broke.
         /// </summary>
         /// <param name="text"></param>
         private void SetText(string text)
         {
+            try
+            { 
             Console.WriteLine(text);
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error :" + ex.Message);
+            }
         }
     }
 }

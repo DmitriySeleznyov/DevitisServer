@@ -1,4 +1,5 @@
 ﻿using ServerMQTT_Lora.ConfigModel;
+using System;
 using System.Xml;
 
 namespace ServerMQTT_Lora
@@ -7,46 +8,46 @@ namespace ServerMQTT_Lora
     {
         public DBSettingsModel DBReader()
         {
-            DBSettingsModel db = new DBSettingsModel();
-            XmlDocument xmldoc = new XmlDocument();
-            xmldoc.Load("Config.xml");
+                DBSettingsModel db = new DBSettingsModel();
+                XmlDocument xmldoc = new XmlDocument();
+                xmldoc.Load("Config.xml");
 
-            XmlElement xRoot = xmldoc.DocumentElement;
-            foreach (XmlNode xnode in xRoot)
-            {
-                foreach (XmlNode fchildnode in xRoot.ChildNodes)
+                XmlElement xRoot = xmldoc.DocumentElement;
+                foreach (XmlNode xnode in xRoot)
                 {
-
-                    if (fchildnode.Name == "DataBaseConnectSettings")
+                    foreach (XmlNode fchildnode in xRoot.ChildNodes)
                     {
 
-                        foreach (XmlNode childnode in fchildnode.ChildNodes)
+                        if (fchildnode.Name == "DataBaseConnectSettings")
                         {
-                            if (childnode.Name == "server")
+
+                            foreach (XmlNode childnode in fchildnode.ChildNodes)
                             {
-                                db.server = childnode.InnerText;
-                            }
-                            if (childnode.Name == "port")
-                            {
-                                db.port = childnode.InnerText;
-                            }
-                            if (childnode.Name == "user")
-                            {
-                                db.user = childnode.InnerText;
-                            }
-                            if (childnode.Name == "database")
-                            {
-                                db.database = childnode.InnerText;
-                            }
-                            if (childnode.Name == "password")
-                            {
-                                db.password = childnode.InnerText;
+                                if (childnode.Name == "server")
+                                {
+                                    db.server = childnode.InnerText;
+                                }
+                                if (childnode.Name == "port")
+                                {
+                                    db.port = childnode.InnerText;
+                                }
+                                if (childnode.Name == "user")
+                                {
+                                    db.user = childnode.InnerText;
+                                }
+                                if (childnode.Name == "database")
+                                {
+                                    db.database = childnode.InnerText;
+                                }
+                                if (childnode.Name == "password")
+                                {
+                                    db.password = childnode.InnerText;
+                                }
                             }
                         }
                     }
                 }
-            }
-            return db;
+                return db;
         }
     }
 }

@@ -1,7 +1,6 @@
 ﻿using Npgsql;
 using ServerMQTT_Lora.ConfigModel;
 using System;
-using System.Text;
 
 namespace ServerMQTT_Lora.DBWorking
 {
@@ -20,10 +19,17 @@ namespace ServerMQTT_Lora.DBWorking
         /// <param name="connectionstring">connectionstring</param>
         public void AddWithOpenConnection(string sub_code, string sum_pot, string pol_pot, string curr, string volt, string temper, string state, DBSettingsModel settings)
         {
-            Connection connection = new Connection(settings);
-            connection.Connect();
-            AddInfo(GetsubjId(sub_code,connection).ToString(), sum_pot, pol_pot, curr, volt, temper, state, connection);
-            connection.Disconect();
+            try
+            {
+                Connection connection = new Connection(settings);
+                connection.Connect();
+                AddInfo(GetsubjId(sub_code, connection).ToString(), sum_pot, pol_pot, curr, volt, temper, state, connection);
+                connection.Disconect();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error :" + ex.Message);
+            }
         }
 
         /// <summary>
@@ -39,8 +45,15 @@ namespace ServerMQTT_Lora.DBWorking
         /// <param name="connection">connection</param>
         public void AddWithoutOpenConnection(string sub_code , string sum_pot, string pol_pot, string curr, string volt, string temper, string state , Connection connection)
         {
-            AddInfo(GetsubjId(sub_code, connection).ToString(), sum_pot, pol_pot, curr, volt, temper, state, connection);
-        }
+            try
+            {
+                AddInfo(GetsubjId(sub_code, connection).ToString(), sum_pot, pol_pot, curr, volt, temper, state, connection);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error :" + ex.Message);
+            }
+}
 
         /// <summary>
         /// Adding info to db
@@ -55,13 +68,20 @@ namespace ServerMQTT_Lora.DBWorking
         /// <param name="connection">connection</param>
         private void AddInfo(string subject_id, string sum_pot, string pol_pot, string curr, string volt, string temper, string state, Connection connection)
         {
-            connection.Disconect();
-            connection.Connect();
-            string query = "insert into \"Monitoring_BKMU\" (subject_id, sum_pot,pol_pot,curr,volt,temper,state,reg_time) " +
-                "values('" + stringrefactor(subject_id) + "', '" + stringrefactor(sum_pot) + "' , '" + stringrefactor(pol_pot) + "' , '" + stringrefactor(curr) + "' , '" + stringrefactor(volt) + "' , '" + stringrefactor(temper) + "' , '+" + stringrefactor(state) + "' , '" + DateTime.Now.ToString() + "')";
-            NpgsqlCommand cmd = new NpgsqlCommand(query, connection.connection);
-            cmd.ExecuteNonQuery();
-            connection.Disconect();
+            try
+            {
+                connection.Disconect();
+                connection.Connect();
+                string query = "insert into \"Monitoring_BKMU\" (subject_id, sum_pot,pol_pot,curr,volt,temper,state,reg_time) " +
+                    "values('" + stringrefactor(subject_id) + "', '" + stringrefactor(sum_pot) + "' , '" + stringrefactor(pol_pot) + "' , '" + stringrefactor(curr) + "' , '" + stringrefactor(volt) + "' , '" + stringrefactor(temper) + "' , '+" + stringrefactor(state) + "' , '" + DateTime.Now.ToString() + "')";
+                NpgsqlCommand cmd = new NpgsqlCommand(query, connection.connection);
+                cmd.ExecuteNonQuery();
+                connection.Disconect();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error :" + ex.Message);
+            }
         }
 
         private string stringrefactor(string str)
