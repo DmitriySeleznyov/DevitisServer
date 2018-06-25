@@ -24,6 +24,7 @@ namespace ServerMQTT_Lora
             {
                 foreach (XmlNode fchildnode in xRoot.ChildNodes)
                 {
+
                     if (fchildnode.Name == "MqttConnectSettings")
                     {
 

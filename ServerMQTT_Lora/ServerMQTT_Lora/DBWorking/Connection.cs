@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Text;
 using Npgsql;
+using ServerMQTT_Lora.ConfigModel;
+using ServerMQTT_Lora.MQTTWorking;
 
 namespace ServerMQTT_Lora.DBWorking
 {
@@ -8,19 +10,7 @@ namespace ServerMQTT_Lora.DBWorking
     {
         private string string_connection;
         public NpgsqlConnection connection;
-
-        /// <summary>
-        /// конструктор с параметром строка подключения
-        /// пример корректной строки подключения к базе:
-        /// "Server = postgres9.1gb.ua; Port = 5432; User Id = xgbua_x_exz; Password = cf4d55a7nm; Database = xgbua_x_exz; "
-        /// </summary>
-        /// <param name="stringtoconnection">строка подключения к базе</param>
-        public Connection(string stringtoconnection)
-        {
-            this.string_connection = stringtoconnection;
-            Console.WriteLine("DB add line to DB succesfully!");
-        }
-
+       
         /// <summary>
         /// конструктор с параметрами
         /// пример 
@@ -31,10 +21,10 @@ namespace ServerMQTT_Lora.DBWorking
         /// <param name="user">пользователь</param>
         /// <param name="password">пароль</param>
         /// <param name="database">база</param>
-        public Connection(string server , string port , string user , string password , string database)
+        public Connection(DBSettingsModel settings)
         {
             StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.Append("Server = " + server + "; Port = " + port + "; User Id = " + user + "; Password = " + password + "; Database =  " + database);
+            stringBuilder.Append("Server = " + settings.server + "; Port = " + settings.port + "; User Id = " + settings.user + "; Password = " + settings.password + "; Database =  " + settings.database);
             this.string_connection = stringBuilder.ToString();
             Console.WriteLine("DB add line succesfully!");
 

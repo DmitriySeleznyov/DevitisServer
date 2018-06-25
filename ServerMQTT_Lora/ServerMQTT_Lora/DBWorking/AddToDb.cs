@@ -1,5 +1,7 @@
 ﻿using Npgsql;
+using ServerMQTT_Lora.ConfigModel;
 using System;
+using System.Text;
 
 namespace ServerMQTT_Lora.DBWorking
 {
@@ -16,9 +18,9 @@ namespace ServerMQTT_Lora.DBWorking
         /// <param name="temper">temper</param>
         /// <param name="state">state</param>
         /// <param name="connectionstring">connectionstring</param>
-        public void AddWithOpenConnection(string sub_code, string sum_pot, string pol_pot, string curr, string volt, string temper, string state, string connectionstring)
+        public void AddWithOpenConnection(string sub_code, string sum_pot, string pol_pot, string curr, string volt, string temper, string state, DBSettingsModel settings)
         {
-            Connection connection = new Connection(connectionstring);
+            Connection connection = new Connection(settings);
             connection.Connect();
             AddInfo(GetsubjId(sub_code,connection).ToString(), sum_pot, pol_pot, curr, volt, temper, state, connection);
             connection.Disconect();
@@ -80,9 +82,7 @@ namespace ServerMQTT_Lora.DBWorking
             NpgsqlCommand command = new NpgsqlCommand("SELECT \"subject_id\" FROM \"Subject\" WHERE \"subject_code\" = '" + sub_code + "'", connection.connection);
             NpgsqlDataReader dataReader = command.ExecuteReader();
             dataReader.Read();
-            
             return int.Parse(dataReader[0].ToString());
-            
         }
     }
 }
