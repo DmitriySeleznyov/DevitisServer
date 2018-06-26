@@ -25,6 +25,7 @@ namespace ServerMQTT_Lora
         private static SignalHandler signalHandler;
         #endregion
 
+
         static void Main(string[] args)
         {
             ConnectMqtt connect = new ConnectMqtt();

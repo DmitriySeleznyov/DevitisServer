@@ -9,7 +9,7 @@ namespace ServerMQTT_Lora
     public class ConnectMqtt
     {
 
-        MqttClient client;
+        public MqttClient client;
         PublishedMessage pubMessage = new PublishedMessage();
 
         /// <summary>
@@ -20,20 +20,19 @@ namespace ServerMQTT_Lora
         {
             try
             {
-                client = new MqttClient(settings.HostName);
-                byte code = client.Connect(Guid.NewGuid().ToString());
-                client.ProtocolVersion = MqttProtocolVersion.Version_3_1;
+                this.client = new MqttClient(settings.HostName);
+                byte code = this.client.Connect(Guid.NewGuid().ToString());
                 if (client.IsConnected)
                 {
                     Console.WriteLine("Connected to Mqtt: \n"); //BLEKFIEFF exz/lora
                     Console.WriteLine("Connected to DB:  \n");
-                    ushort msgId = client.Subscribe(new string[] { settings.Topic }, new byte[] { MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE });
-                    client.MqttMsgPublishReceived += new MqttClient.MqttMsgPublishEventHandler(pubMessage.EventPublished);
+                    ushort msgId = this.client.Subscribe(new string[] { settings.Topic }, new byte[] { MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE });
+                    this.client.MqttMsgPublishReceived += new MqttClient.MqttMsgPublishEventHandler(pubMessage.EventPublished);
                 }
                 else
                 {
                     Console.WriteLine("Cannot connect to Mqtt. Reload.");
-                    client.Disconnect();
+                    this.client.Disconnect();
                 }
             }
             catch (Exception ex)
@@ -49,7 +48,7 @@ namespace ServerMQTT_Lora
         {
             try
             {
-                client.Disconnect();
+                this.client.Disconnect();
                 Console.WriteLine("MQTT Disconnect");
             }
             catch (Exception ex)

@@ -1,4 +1,5 @@
 ﻿using ServerMQTT_Lora.MQTTWorking;
+using System.IO;
 using System.Xml;
 
 namespace ServerMQTT_Lora
@@ -10,7 +11,7 @@ namespace ServerMQTT_Lora
             MqttSettingsModel mqtt = new MqttSettingsModel();
 
             XmlDocument xmldoc = new XmlDocument();
-            xmldoc.Load("Config.xml");
+            xmldoc.Load(Directory.GetCurrentDirectory()+"\\Config.xml");
 
             XmlElement xRoot = xmldoc.DocumentElement;
             foreach (XmlNode xnode in xRoot)
